@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="index1.css" />
+</head>
+
+<body>
+    <div class="chatApp">
+        <div class="chatContainer">
+            <h3>Chat hoy ! <br>✿◕ ‿ ◕✿</h3>
+            <input id="name" type="text" placeholder="Name..." onchange="setUpName(this.value)" />
+            <input id="room" type="text" placeholder="Room..." onchange="setUpRoom(this.value)" />
+            <button onclick="joinRoom()">CONNECT</button>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+    integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+    crossorigin="anonymous"></script>
+<script>
+    const socket = io("http://localhost:3000");
+    let name = document.querySelector('#name').value;
+    let room = document.querySelector('#room').value;
+    function setUpName(val) {
+        name = val;
+    }
+    function setUpRoom(val) {
+        room = val;
+    }
+    function joinRoom() {
+        if (name !== "" && room !== "") {
+            socket.emit("joinRoom", room);
+        }
+        function Chat()
+    };
+</script>
+
+</html>
