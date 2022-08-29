@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="index1.css" />
 </head>
 
+<!-- BODY TAG -->
+
 <body>
     <div id="chatApp" class="chatApp">
         <div id="chatContainer" class="chatContainer">
@@ -18,30 +20,26 @@
             <button onclick="joinRoom()">CONNECT</button>
         </div>
 
+        <!-- CONNECT TO CHAT PAGE-->
+
         <div id="chatWindow" class="chatWindow">
             <div class="chatHeader">
                 <p id=>Chat hoy !</p>
             </div>
             <div class="chatBody">
-                <div class="messageContainer">
-                    <div class="message">
-                        <div>
-                            <div class="message-content">
-                                <p>{messageContent.message}</p>
-                            </div>
-                            <div className="messageMeta">
-                                <p id="time">{messageContent.time}</p>
-                                <p id="author">{messageContent.author}</p>
-                            </div>
-                        </div>
+                <div class="message">
+                    <div class="messageContent">
+                        <pre id="mes"></pre>
                     </div>
-                    
-                
+                    <div className="messageMeta">
+                        <pre id="time"></pre>
+                        <pre id="author"></pre>
+                    </div>
                 </div>
             </div>
             <div class="chatFooter">
-                <input id="currentMessage" type="text" placeholder="Message..." onchange="setCurrentMessage(this.value)"
-                    onkeypress="key()" />
+                <input id="currentMessage" type="text" placeholder="Message..."
+                    onchange="setCurrentMessage(this.value)" />
                 <button onclick="sendMessage()">&#10148;</button>
             </div>
         </div>
@@ -52,13 +50,19 @@
         }
     </style>
 </body>
+
+<!-- SCRIPT TAG -->
+
 <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"
     integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
     crossorigin="anonymous"></script>
+
+<!-- SET UP PRIVATE ROOM -->
+
 <script>
     const socket = io("http://localhost:3000");
-    let name = document.querySelector('#name').value;
-    let room = document.querySelector('#room').value;
+    let name = document.getElementById("name").value;
+    let room = document.getElementById("room").value;
     function setUpName(val) {
         name = val;
     }
@@ -69,12 +73,14 @@
         if (name !== "" && room !== "") {
             socket.emit("joinRoom", room);
         }
-        const e = document.getElementById('chatContainer').remove();
-        document.getElementById('chatWindow').style.display = "block";
-        document.getElementById('chatApp').style.background = "url(https://previews.123rf.com/images/usbfco/usbfco1212/usbfco121200044/16703615-penguin-family-on-winter-background.jpg) no-repeat center";
+        const e = document.getElementById("chatContainer").remove();
+        document.getElementById("chatWindow").style.display = "block";
+        document.getElementById("chatApp").style.background = "url(https://previews.123rf.com/images/usbfco/usbfco1212/usbfco121200044/16703615-penguin-family-on-winter-background.jpg) no-repeat center";
     };
-    const messageList = [];
-    let currentMessage = document.querySelector('#currentMessage').value;
+
+    //SET UP CHAT
+
+    let currentMessage = document.getElementById("currentMessage").value;
     function setCurrentMessage(val) {
         currentMessage = val;
     }
@@ -91,16 +97,17 @@
             };
 
             await socket.emit("send_message", messageData);
-            messageList.push(messageData);
-            setCurrentMessage("");
+            document.getElementById("mes").textContent += messageData.message + '\n';
+            document.getElementById("time").textContent += messageData.time + '\n';
+            document.getElementById("author").textContent += messageData.author + '\n';
+            document.getElementById("currentMessage").value = "";
         }
     };
     socket.on("receive_message", (data) => {
-        messageList.push(data);
+        document.getElementById("mes").textContent += data.message + '\n';
+        document.getElementById("time").textContent += data.time + '\n';
+        document.getElementById("author").textContent += data.author + '\n';
     });
-    function key() {
-        "Enter" && sendMessage();
-    }
 </script>
 
 </html>
