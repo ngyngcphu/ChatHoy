@@ -55,3 +55,140 @@ body {
 .chatContainer button:hover {
     background: #8854d0;
 }
+
+.chatWindow {
+    width: 500px;
+    height: 500px;
+    place-items: center;
+}
+
+.chatWindow p {
+    margin: 0;
+}
+
+.chatWindow .chatHeader {
+    height: 50px;
+    border-radius: 10px;
+    background: #263238;
+    position: relative;
+}
+
+.chatWindow .chatHeader p {
+    display: block;
+    padding: 0 1em 0 2em;
+    color: #fff;
+    font-weight: 800;
+    line-height: 50px;
+
+}
+
+.chatWindow .chatBody {
+    text-align: center;
+    height: 60vh;
+    border: 5px solid #263238;
+    background: #fff;
+    position: relative;
+}
+
+.chatWindow .chatBody .messageContainer {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.chatWindow .chatBody .messageContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.chatWindow .chatBody .message {
+    height: auto;
+    padding: 10px;
+    display: flex;
+}
+
+.chatWindow .chatBody .message .message-content {
+    width: auto;
+    height: auto;
+    min-height: 40px;
+    max-width: 120px;
+    background-color: #43a047;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+#you {
+    justify-content: flex-start;
+}
+
+#you .message-content {
+    justify-content: flex-start;
+}
+
+#you .messageMeta {
+    justify-content: flex-start;
+    margin-left: 5px;
+}
+
+#other {
+    justify-content: flex-end;
+}
+
+#other .message-content {
+    justify-content: flex-end;
+    background-color: cornflowerblue;
+}
+
+#other .messageMeta {
+    justify-content: flex-end;
+    margin-right: 5px;
+}
+
+.messageMeta #author {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.chatWindow .chatBody .message .messageMeta {
+    display: flex;
+    font-size: 12px;
+}
+
+.chatWindow .chatFooter {
+    height: 50px;
+    border: 5px solid #263238;
+    border-top: none;
+    display: flex;
+}
+
+.chatWindow .chatFooter input {
+    height: 100%;
+    flex: 90%;
+    border: 0;
+    padding: 0 0.7em;
+    font-size: 1em;
+    font-family: "Merriweather";
+}
+
+.chatWindow .chatFooter button {
+    border: 0;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    flex: 10%;
+    height: 100%;
+    background: #fd79a8;
+    font-size: 30px;
+}
+
+.chatWindow .chatFooter button:hover {
+    color: #3867d6;
+}

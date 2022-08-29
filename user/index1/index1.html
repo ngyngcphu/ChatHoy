@@ -10,14 +10,47 @@
 </head>
 
 <body>
-    <div class="chatApp">
-        <div class="chatContainer">
+    <div id="chatApp" class="chatApp">
+        <div id="chatContainer" class="chatContainer">
             <h3>Chat hoy ! <br>✿◕ ‿ ◕✿</h3>
             <input id="name" type="text" placeholder="Name..." onchange="setUpName(this.value)" />
             <input id="room" type="text" placeholder="Room..." onchange="setUpRoom(this.value)" />
             <button onclick="joinRoom()">CONNECT</button>
         </div>
+
+        <div id="chatWindow" class="chatWindow">
+            <div class="chatHeader">
+                <p id=>Chat hoy !</p>
+            </div>
+            <div class="chatBody">
+                <div class="messageContainer">
+                    <div class="message">
+                        <div>
+                            <div class="message-content">
+                                <p>{messageContent.message}</p>
+                            </div>
+                            <div className="messageMeta">
+                                <p id="time">{messageContent.time}</p>
+                                <p id="author">{messageContent.author}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                
+                </div>
+            </div>
+            <div class="chatFooter">
+                <input id="currentMessage" type="text" placeholder="Message..." onchange="setCurrentMessage(this.value)"
+                    onkeypress="key()" />
+                <button onclick="sendMessage()">&#10148;</button>
+            </div>
+        </div>
     </div>
+    <style>
+        .chatWindow {
+            display: none;
+        }
+    </style>
 </body>
 <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"
     integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
@@ -36,8 +69,38 @@
         if (name !== "" && room !== "") {
             socket.emit("joinRoom", room);
         }
-        function Chat()
+        const e = document.getElementById('chatContainer').remove();
+        document.getElementById('chatWindow').style.display = "block";
+        document.getElementById('chatApp').style.background = "url(https://previews.123rf.com/images/usbfco/usbfco1212/usbfco121200044/16703615-penguin-family-on-winter-background.jpg) no-repeat center";
     };
+    const messageList = [];
+    let currentMessage = document.querySelector('#currentMessage').value;
+    function setCurrentMessage(val) {
+        currentMessage = val;
+    }
+    const sendMessage = async () => {
+        if (currentMessage !== "") {
+            const messageData = {
+                room: room,
+                author: name,
+                message: currentMessage,
+                time:
+                    new Date(Date.now()).getHours() +
+                    ":" +
+                    new Date(Date.now()).getMinutes(),
+            };
+
+            await socket.emit("send_message", messageData);
+            messageList.push(messageData);
+            setCurrentMessage("");
+        }
+    };
+    socket.on("receive_message", (data) => {
+        messageList.push(data);
+    });
+    function key() {
+        "Enter" && sendMessage();
+    }
 </script>
 
 </html>
