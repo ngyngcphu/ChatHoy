@@ -59,7 +59,6 @@ body {
 .chatWindow {
     width: 500px;
     height: 500px;
-    place-items: center;
 }
 
 .chatWindow p {
@@ -83,11 +82,21 @@ body {
 }
 
 .chatWindow .chatBody {
-    text-align: center;
     height: 60vh;
     border: 5px solid #263238;
     background: #fff;
     position: relative;
+}
+
+.chatWindow .chatBody .messageContainer {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.chatWindow .chatBody .messageContainer::-webkit-scrollbar {
+    display: none;
 }
 
 .chatWindow .chatBody .message {
@@ -101,9 +110,9 @@ body {
     height: auto;
     min-height: 40px;
     max-width: 120px;
-    /*background-color: #0a0a0a;*/
+    background-color: #43a047;
     border-radius: 5px;
-    color: black;
+    color: white;
     display: flex;
     align-items: center;
     margin-right: 5px;
@@ -112,6 +121,19 @@ body {
     padding-left: 5px;
     overflow-wrap: break-word;
     word-break: break-word;
+}
+
+#who {
+    justify-content: flex;
+}
+
+#who .messageContent {
+    justify-content: flex;
+}
+
+#who .messageMeta {
+    justify-content: flex;
+    margin-left: 5px;
 }
 
 .messageMeta #author {
@@ -137,7 +159,6 @@ body {
     border: 0;
     padding: 0 0.7em;
     font-size: 1em;
-    font-family: "Merriweather";
 }
 
 .chatWindow .chatFooter button {
@@ -154,3 +175,7 @@ body {
 .chatWindow .chatFooter button:hover {
     color: #3867d6;
 }
+
+.hide {
+    opacity: 0;
+  }

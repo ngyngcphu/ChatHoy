@@ -24,22 +24,25 @@
 
         <div id="chatWindow" class="chatWindow">
             <div class="chatHeader">
-                <p id=>Chat hoy !</p>
+                <p>Chat hoy !</p>
             </div>
             <div class="chatBody">
-                <div class="message">
-                    <div class="messageContent">
-                        <pre id="mes"></pre>
-                    </div>
-                    <div className="messageMeta">
-                        <pre id="time"></pre>
-                        <pre id="author"></pre>
+                <div class="messageContainer">
+                    <div class="message" id="who">
+                        <div>
+                            <div class="messageContent">
+                                <p id="mes"></p>
+                            </div>
+                            <div class="messageMeta">
+                                <p id="time"></p>
+                                <p id="author"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="chatFooter">
-                <input id="currentMessage" type="text" placeholder="Message..."
-                    onchange="setCurrentMessage(this.value)" />
+                <input id="currentMessage" type="text" placeholder="Message..." />
                 <button onclick="sendMessage()">&#10148;</button>
             </div>
         </div>
@@ -73,23 +76,24 @@
         if (name !== "" && room !== "") {
             socket.emit("joinRoom", room);
         }
-        const e = document.getElementById("chatContainer").remove();
+        document.getElementById("chatContainer").remove();
         document.getElementById("chatWindow").style.display = "block";
         document.getElementById("chatApp").style.background = "url(https://previews.123rf.com/images/usbfco/usbfco1212/usbfco121200044/16703615-penguin-family-on-winter-background.jpg) no-repeat center";
     };
 
     //SET UP CHAT
 
-    let currentMessage = document.getElementById("currentMessage").value;
-    function setCurrentMessage(val) {
-        currentMessage = val;
-    }
+    let currentMessage = document.getElementById("currentMessage");
+    currentMessage.addEventListener("keypress", (e) => {
+        e.key === "Enter" && sendMessage();
+    })
+
     const sendMessage = async () => {
-        if (currentMessage !== "") {
+        if (currentMessage.value !== "") {
             const messageData = {
                 room: room,
                 author: name,
-                message: currentMessage,
+                message: currentMessage.value,
                 time:
                     new Date(Date.now()).getHours() +
                     ":" +
@@ -97,17 +101,19 @@
             };
 
             await socket.emit("send_message", messageData);
-            document.getElementById("mes").textContent += messageData.message + '\n';
-            document.getElementById("time").textContent += messageData.time + '\n';
-            document.getElementById("author").textContent += messageData.author + '\n';
-            document.getElementById("currentMessage").value = "";
+            document.getElementById("mes").textContent += messageData.message + "\n";
+            document.getElementById("time").textContent += messageData.time + "\n";
+            document.getElementById("author").textContent += messageData.author + "\n";
+            currentMessage.value = "";
+
         }
     };
     socket.on("receive_message", (data) => {
-        document.getElementById("mes").textContent += data.message + '\n';
-        document.getElementById("time").textContent += data.time + '\n';
-        document.getElementById("author").textContent += data.author + '\n';
+        document.getElementById("mes").textContent += data.message + "\n";
+        document.getElementById("time").textContent += data.time + "\n";
+        document.getElementById("author").textContent += data.author + "\n";
     });
+
 </script>
 
 </html>
