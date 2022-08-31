@@ -105,7 +105,7 @@ body {
     display: flex;
 }
 
-.chatWindow .chatBody .message .messageContent {
+/* .chatWindow .chatBody .message #messageData {
     width: auto;
     height: auto;
     min-height: 40px;
@@ -121,30 +121,7 @@ body {
     padding-left: 5px;
     overflow-wrap: break-word;
     word-break: break-word;
-}
-
-#who {
-    justify-content: flex;
-}
-
-#who .messageContent {
-    justify-content: flex;
-}
-
-#who .messageMeta {
-    justify-content: flex;
-    margin-left: 5px;
-}
-
-.messageMeta #author {
-    margin-left: 10px;
-    font-weight: bold;
-}
-
-.chatWindow .chatBody .message .messageMeta {
-    display: flex;
-    font-size: 12px;
-}
+} */
 
 .chatWindow .chatFooter {
     height: 50px;

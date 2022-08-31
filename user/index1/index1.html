@@ -28,15 +28,9 @@
             </div>
             <div class="chatBody">
                 <div class="messageContainer">
-                    <div class="message" id="who">
+                    <div class="message">
                         <div>
-                            <div class="messageContent">
-                                <p id="mes"></p>
-                            </div>
-                            <div class="messageMeta">
-                                <p id="time"></p>
-                                <p id="author"></p>
-                            </div>
+                            <div id="messageData"></div>
                         </div>
                     </div>
                 </div>
@@ -101,17 +95,17 @@
             };
 
             await socket.emit("send_message", messageData);
-            document.getElementById("mes").textContent += messageData.message + "\n";
-            document.getElementById("time").textContent += messageData.time + "\n";
-            document.getElementById("author").textContent += messageData.author + "\n";
+            const mes = document.createElement("p");
+            mes.innerText = messageData.time + " " + messageData.author + ": " + messageData.message;
+            document.getElementById("messageData").appendChild(mes);
             currentMessage.value = "";
 
         }
     };
     socket.on("receive_message", (data) => {
-        document.getElementById("mes").textContent += data.message + "\n";
-        document.getElementById("time").textContent += data.time + "\n";
-        document.getElementById("author").textContent += data.author + "\n";
+        const mes = document.createElement("p");
+        mes.innerText = data.time + " " + data.author + ": " + data.message;
+        document.getElementById("messageData").appendChild(mes);
     });
 
 </script>
