@@ -3,8 +3,8 @@ const { Server } = require("socket.io");
 const httpServer = createServer();
 const io = new Server(httpServer, {
     cors: {
-        origin: "https://ngyngcphu.github.io/",
-        credentials: true
+        origin: "https://ngyngcphu.github.io",
+        methods: ["GET", "POST"],
     },
 });
 httpServer.listen(process.env.PORT || 3000);
