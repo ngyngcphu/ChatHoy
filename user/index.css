@@ -1,0 +1,198 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.chatApp {
+    width: 100vw;
+    height: 100vh;
+    background: url(https://anhnenchat.com/wp-content/uploads/2021/02/chim-canh-cut-chibi-dang-yeu-nhat-cho-dien-thoai-13.png);
+    color: #212121;
+    font-family: "Merriweather";
+    display: grid;
+    place-items: center;
+}
+
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 100px solid #d1d8e0;
+    border-radius: 150px;
+}
+
+.chatContainer h3 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    border: 2px solid #a5b1c2;
+    border-radius: 20px;
+    background: #dff9fb;
+}
+
+.chatContainer input {
+    width: 210px;
+    height: 40px;
+    margin: 7px;
+    border: 2px solid #a5b1c2;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.chatContainer button {
+    width: 225px;
+    height: 50px;
+    margin: 7px;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 20px;
+    background: #2bcbba;
+    color: #212121;
+    cursor: pointer;
+}
+
+.chatContainer button:hover {
+    background: #8854d0;
+}
+
+.chatWindow {
+    width: 500px;
+    height: 500px;
+}
+
+.chatWindow p {
+    margin: 0;
+}
+
+.chatWindow .chatHeader {
+    height: 50px;
+    border-radius: 10px;
+    background: #263238;
+    position: relative;
+}
+
+.chatWindow .chatHeader p {
+    display: block;
+    padding: 0 1em 0 2em;
+    color: #fff;
+    font-weight: 800;
+    line-height: 50px;
+
+}
+
+.chatWindow .chatBody {
+    height: 60vh;
+    border: 5px solid #263238;
+    background: #fff;
+    position: relative;
+}
+
+.chatWindow .chatBody .messageContainer {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.chatWindow .chatBody .messageContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.chatWindow .chatBody .message {
+    height: auto;
+    padding: 10px;
+    display: flex;
+}
+
+.chatWindow .chatFooter {
+    height: 50px;
+    border: 5px solid #263238;
+    border-top: none;
+    display: flex;
+}
+
+.chatWindow .chatFooter input {
+    height: 100%;
+    flex: 90%;
+    border: 0;
+    padding: 0 0.7em;
+    font-size: 1em;
+}
+
+.chatWindow .chatFooter button {
+    border: 0;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    flex: 10%;
+    height: 100%;
+    background: #fd79a8;
+    font-size: 30px;
+}
+
+.chatWindow .chatFooter button:hover {
+    color: #3867d6;
+}
+
+.load {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url(https://howtodrawforkids.com/wp-content/uploads/2022/03/how-to-draw-a-cute-penguin.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.5s;
+}
+
+.load .circle {
+    height: 100px;
+    width: 100px;
+    border: 10px solid #4b6584;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.load .circle:after {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 100%;
+    border: 10px solid #d1d8e0;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.emoji {
+    width: 100px;
+    margin-bottom: 32px;
+    margin-top: -200px;
+    margin-left: 300px;
+    transition: opacity 0.2s;
+    text-align: center;
+    font-size: 24px;
+    padding: 8px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    position: absolute;
+}
+
+.emoji:hover {
+    cursor: pointer;
+}

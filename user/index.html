@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHAT HOY</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<!-- BODY TAG -->
+
+<body>
+    <!-- VALIDATION PAGE -->
+    <div id="chatApp" class="chatApp">
+        <div id="chatContainer" class="chatContainer">
+            <h3>Chat hoy ! <br>✿◕ ‿ ◕✿</h3>
+            <input id="name" type="text" placeholder="Name..." onchange="setUpName(this.value)" />
+            <input id="room" type="number" placeholder="Room..." onchange="setUpRoom(this.value)" />
+            <button onclick="joinRoom()">CONNECT</button>
+        </div>
+
+        <!-- CONNECT TO CHAT PAGE-->
+
+        <div id="chatWindow" class="chatWindow">
+            <div class="chatHeader">
+                <p>Chat hoy !</p>
+            </div>
+            <div class="chatBody">
+                <div class="messageContainer">
+                    <div class="message">
+                        <div>
+                            <div id="messageData"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chatFooter">
+                <input id="currentMessage" type="text" placeholder="Message..." />
+                <button onclick="sendIcon()">&#9786;</button>
+                <div id="list" class="emoji hidden">
+                    <div onclick="addEmoji(this.innerText)">&#128151;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128512;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128517;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128515;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128516;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128521;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128525;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128526;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128529;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128534;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128536;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128541;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128542;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128545;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128548;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128557;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128558;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128561;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128564;</div>
+                    <div onclick="addEmoji(this.innerText)">&#129324;</div>
+                    <div onclick="addEmoji(this.innerText)">&#129326;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128076;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128039;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128054;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128400;</div>
+                </div>
+                <button onclick="sendMessage()">&#10148;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONNECT TO LOADING PAGE -->
+
+    <div id="load" class="load">
+        <div class="circle"></div>
+    </div>
+    <style>
+        .chatWindow {
+            display: none;
+        }
+
+        .load {
+            display: none;
+        }
+    </style>
+</body>
+
+<!-- /* SCRIPT TAG */ -->
+
+<script src="https://cdn.socket.io/4.5.0/socket.io.min.js"
+    integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k"
+    crossorigin="anonymous"></script>
+
+<!-- /* SET UP PRIVATE ROOM */ -->
+
+<script>
+    const socket = io("http://localhost:3000");
+    let name = document.getElementById("name").value;
+    let room = document.getElementById("room").value;
+    function setUpName(val) {
+        name = val;
+    }
+    function setUpRoom(val) {
+        room = val;
+    }
+    function joinRoom() {
+        if (name === "") {
+            alert("Please enter your name!");
+        } else if (room === "") {
+            alert("Please enter room!");
+        }
+        if (name !== "" && room !== "") {
+            socket.emit("joinRoom", room);
+        }
+    }
+    socket.on("numberClients", (data) => {
+        if (data < 2) {
+            document.getElementById("chatApp").style.display = "none";
+            document.getElementById("load").style.display = "flex";
+            setTimeout(() => {
+                document.getElementById("chatApp").style.display = "grid";
+                document.getElementById("load").style.display = "none";
+                socket.emit("back", data);
+            }, 10000);
+        } else {
+            document.getElementById("load").style.display = "none";
+            document.getElementById("chatApp").style.display = "grid";
+            document.getElementById("chatContainer").style.display = "none";
+            document.getElementById("chatWindow").style.display = "block";
+            document.getElementById("chatApp").style.background = "url(https://previews.123rf.com/images/usbfco/usbfco1212/usbfco121200044/16703615-penguin-family-on-winter-background.jpg) no-repeat center";
+        }
+    })
+    /* SET UP CHAT */
+    let currentMessage = document.getElementById("currentMessage");
+    function addEmoji(emoji) {
+        currentMessage.value += emoji;
+    }
+
+    function sendIcon() {
+        let list = document.getElementById('list');
+        if (list.classList.contains('hidden')) {
+            list.classList.remove('hidden');
+        } else {
+            list.classList.add('hidden');
+        }
+    }
+
+    currentMessage.addEventListener("keypress", (e) => {
+        e.key === "Enter" && sendMessage();
+    })
+
+    const sendMessage = async () => {
+        if (currentMessage.value !== "") {
+            const messageData = {
+                room: room,
+                author: name,
+                message: currentMessage.value,
+                time:
+                    new Date(Date.now()).getHours() +
+                    ":" +
+                    new Date(Date.now()).getMinutes(),
+            };
+
+            await socket.emit("send_message", messageData);
+            const mes = document.createElement("p");
+            mes.innerText = messageData.time + " " + messageData.author + ": " + messageData.message;
+            document.getElementById("messageData").appendChild(mes);
+            currentMessage.value = "";
+
+        }
+    };
+    socket.on("receive_message", (data) => {
+        const mes = document.createElement("p");
+        mes.innerText = data.time + " " + data.author + ": " + data.message;
+        document.getElementById("messageData").appendChild(mes);
+    });
+    /*document.addEventListener("keydown", (e) => {
+        if (e.ctrlKey || e.keyCode == 123) {
+            e.preventDefault();
+        }
+    });
+    document.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+    });*/
+</script>
+
+</html>
