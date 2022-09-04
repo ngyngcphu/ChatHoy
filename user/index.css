@@ -92,11 +92,6 @@ body {
     width: 100%;
     height: 100%;
     overflow-y: scroll;
-    overflow-x: hidden;
-}
-
-.chatWindow .chatBody .messageContainer::-webkit-scrollbar {
-    display: none;
 }
 
 .chatWindow .chatBody .message {

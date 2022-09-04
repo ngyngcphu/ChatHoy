@@ -62,9 +62,9 @@
                     <div onclick="addEmoji(this.innerText)">&#129324;</div>
                     <div onclick="addEmoji(this.innerText)">&#129326;</div>
                     <div onclick="addEmoji(this.innerText)">&#128076;</div>
-                    <div onclick="addEmoji(this.innerText)">&#128039;</div>
-                    <div onclick="addEmoji(this.innerText)">&#128054;</div>
-                    <div onclick="addEmoji(this.innerText)">&#128400;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128077;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128078;</div>
+                    <div onclick="addEmoji(this.innerText)">&#128079;</div>
                 </div>
                 <button onclick="sendMessage()">&#10148;</button>
             </div>
@@ -96,7 +96,7 @@
 <!-- /* SET UP PRIVATE ROOM */ -->
 
 <script>
-    const socket = io("http://localhost:3000");
+    const socket = io("https://phu-chatapp.herokuapp.com");
     let name = document.getElementById("name").value;
     let room = document.getElementById("room").value;
     function setUpName(val) {
@@ -119,11 +119,6 @@
         if (data < 2) {
             document.getElementById("chatApp").style.display = "none";
             document.getElementById("load").style.display = "flex";
-            setTimeout(() => {
-                document.getElementById("chatApp").style.display = "grid";
-                document.getElementById("load").style.display = "none";
-                socket.emit("back", data);
-            }, 10000);
         } else {
             document.getElementById("load").style.display = "none";
             document.getElementById("chatApp").style.display = "grid";
@@ -165,7 +160,7 @@
 
             await socket.emit("send_message", messageData);
             const mes = document.createElement("p");
-            mes.innerText = messageData.time + " " + messageData.author + ": " + messageData.message;
+            mes.innerText = "⌛" + messageData.time + "@" + messageData.author + "✎" + messageData.message;
             document.getElementById("messageData").appendChild(mes);
             currentMessage.value = "";
 
@@ -173,7 +168,7 @@
     };
     socket.on("receive_message", (data) => {
         const mes = document.createElement("p");
-        mes.innerText = data.time + " " + data.author + ": " + data.message;
+        mes.innerText = "⌛" + data.time + "@" + data.author + "✎" + data.message;
         document.getElementById("messageData").appendChild(mes);
     });
     /*document.addEventListener("keydown", (e) => {
