@@ -1,1 +1,1 @@
-TickLab Challenge - Simple Chat Application
+# TickLab Challenge - Simple Chat Application
